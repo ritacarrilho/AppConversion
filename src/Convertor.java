@@ -1,6 +1,6 @@
 /*
 Réalisation d'une application de conversion au choix :
-Fahrenheit => Celcius
+Fahrenheit => Celsius
 Miles => Kilomètre/heure
 Euro => Dollard
 Euro => Livre sterling
@@ -11,16 +11,14 @@ Proposer un moyen de pouvoir faire évoluer les taux de change
 import java.util.Scanner;
 
 public class Convertor {
-    private float fahrenheit;
-    private float celcius;
-    private int miles;
-    private int km;
-    private float euro;
-    private float dollar;
-    private float poundSterling;
-    private float rouble;
+    private double fahrenheit;
+    private double celsius;
+    private float miles;
+    private float km;
+    private float coin;
     private float tax;
     private String conversionChoice;
+    private boolean validChoice = false;
 
     public static void main(String[] args) {
         Convertor convertor = new Convertor();
@@ -28,61 +26,82 @@ public class Convertor {
     }
 
     public void makeConversion() {
-        // display choices
-        Scanner choice = new Scanner(System.in);
-        System.out.println("Choose a conversion  : \n" +
-                "1: Fahrenheit => Celcius \n" +
-                "2: Miles => Kilomètre/heure \n" +
-                "3: Euro => Dollard \n" +
-                "4: Euro => Livre sterling \n" +
-                "5: Euro => Rouble \n"
-        );
+        System.out.println(" FABULOUS CONVERTER \n");
+        do {
+            Scanner choice = new Scanner(System.in);
+            // display choices
+            System.out.println("Choose an option  : \n" +
+                    "1: Fahrenheit => Celsius \n" +
+                    "2: Miles => Kilometers/hour \n" +
+                    "3: Euro => Dollar \n" +
+                    "4: Euro => Pound sterling \n" +
+                    "5: Euro => Rouble \n" +
+                    "6: Exit \n"
+            );
 
-        conversionChoice = choice.nextLine();
+            conversionChoice = choice.nextLine();
 
-        /* if (Integer.parseInt(conversionChoice) > 0 || Integer.parseInt(conversionChoice) >= 5) {
-            System.out.println(conversionChoice);
-         } else {
-          System.out.println("Wrong choice");
-        } */
-
-        // choose one conversion
-        switch (Integer.parseInt(conversionChoice)){
-            case 1:
-                System.out.println(conversionChoice);
-                break;
-            case 2:
-                System.out.println(conversionChoice);
-                break;
-            case 3:
-                System.out.println(conversionChoice);
-                System.out.println("Choose a conversion tax : ");
-                tax = Integer.parseInt(choice.nextLine());
-                System.out.println(tax);
-                break;
-            case 4:
-                System.out.println(conversionChoice);
-                break;
-            case 5:
-                System.out.println(conversionChoice);
-                break;
-        }
-
-        // choose first input
-        // choose second input
-        // choose taxes value
-        // apply and display conversion
+            if(!conversionChoice.matches("-?\\d+") || Integer.parseInt(conversionChoice) > 6){
+                System.out.println("Invalid choice");
+            } else if (Integer.parseInt(conversionChoice) > 0 || Integer.parseInt(conversionChoice) >= 6) {
+                // choose one conversion option
+                switch (Integer.parseInt(conversionChoice)){
+                    case 1:
+                        System.out.println("Insert fahrenheit value : ");
+                        fahrenheit = Float.parseFloat(choice.nextLine()); // fahrenheit value to convert to celsius
+                        temperatureConversion(fahrenheit);
+                        break;
+                    case 2:
+                        System.out.println("Insert miles value : ");
+                        miles = Float.parseFloat(choice.nextLine()); // fahrenheit value to convert to celsius
+                        distanceConversion(miles);
+                        break;
+                    case 3:
+                        System.out.println("Euro => Dollar");
+                        System.out.println("Insert euro value : ");
+                        coin = Float.parseFloat(choice.nextLine());
+                        System.out.println("Choose a conversion tax : ");
+                        tax = Float.parseFloat(choice.nextLine());
+                        CoinConversion(coin, tax, "Euro", "US Dollar" );
+                        break;
+                    case 4:
+                        System.out.println("Euro => Livre sterling");
+                        System.out.println("Insert euro value : ");
+                        coin = Float.parseFloat(choice.nextLine());
+                        System.out.println("Choose a conversion tax : ");
+                        tax = Float.parseFloat(choice.nextLine());
+                        CoinConversion(coin, tax, "Euro", "Livre sterling" );
+                        break;
+                    case 5:
+                        System.out.println("Euro => Rouble");
+                        System.out.println("Insert euro value : ");
+                        coin = Float.parseFloat(choice.nextLine());
+                        System.out.println("Choose a conversion tax : ");
+                        tax = Float.parseFloat(choice.nextLine());
+                        CoinConversion(coin, tax, "Euro", "Rouble" );
+                        break;
+                    case 6:
+                        validChoice = true; // exit program
+                        System.out.println("Goodbye !");
+                        break;
+                }
+            }
+        } while (!validChoice);
     }
 
-    public void temperatureConversion(){
-
+    public void temperatureConversion(double fahrenheitInput){
+        celsius = ((fahrenheitInput-32)*5)/9; // convert fahrenheit to celsius
+        System.out.println(fahrenheitInput + "°F => " + celsius + "°C \n"); // result print
     }
 
-    public void distanceConversion(){
-
+    public void distanceConversion(float milesInput){
+        // multiplying the distance in miles by 1.609344
+        km = (float) (milesInput * 1.609344);
+        System.out.println(milesInput + " miles => " + km + " Km/h \n"); // result print
     }
 
-    public void CoinConversion(){
-
+    public void CoinConversion(double coin, float taxInput, String fromCoin, String toCoin ){
+        double converted = coin * taxInput;
+        System.out.println(Math.round(coin*100)/100D + " " + fromCoin + " => " + Math.round(converted*100)/100D + " " + toCoin + "\n"); // result print
     }
 }

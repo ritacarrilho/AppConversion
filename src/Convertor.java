@@ -17,13 +17,14 @@ public class Convertor {
     private float km;
     private float coin;
     private float tax;
+    private float convertedCoin;
     private String conversionChoice;
     private boolean validChoice = false;
 
-    public static void main(String[] args) {
-        Convertor convertor = new Convertor();
-        convertor.makeConversion();
-    }
+//    public static void main(String[] args) {
+//        Convertor convertor = new Convertor();
+//        convertor.makeConversion();
+//    }
 
     public void makeConversion() {
         System.out.println(" FABULOUS CONVERTER \n");
@@ -62,7 +63,7 @@ public class Convertor {
                         coin = Float.parseFloat(choice.nextLine());
                         System.out.println("Choose a conversion tax : ");
                         tax = Float.parseFloat(choice.nextLine());
-                        CoinConversion(coin, tax, "Euro", "US Dollar" );
+                        coinConversion(coin, tax);
                         break;
                     case 4:
                         System.out.println("Euro => Livre sterling");
@@ -70,7 +71,7 @@ public class Convertor {
                         coin = Float.parseFloat(choice.nextLine());
                         System.out.println("Choose a conversion tax : ");
                         tax = Float.parseFloat(choice.nextLine());
-                        CoinConversion(coin, tax, "Euro", "Livre sterling" );
+                        coinConversion(coin, tax);
                         break;
                     case 5:
                         System.out.println("Euro => Rouble");
@@ -78,7 +79,7 @@ public class Convertor {
                         coin = Float.parseFloat(choice.nextLine());
                         System.out.println("Choose a conversion tax : ");
                         tax = Float.parseFloat(choice.nextLine());
-                        CoinConversion(coin, tax, "Euro", "Rouble" );
+                        coinConversion(coin, tax);
                         break;
                     case 6:
                         validChoice = true; // exit program
@@ -89,19 +90,22 @@ public class Convertor {
         } while (!validChoice);
     }
 
-    public void temperatureConversion(double fahrenheitInput){
+    public double temperatureConversion(double fahrenheitInput){
         celsius = ((fahrenheitInput-32)*5)/9; // convert fahrenheit to celsius
-        System.out.println(fahrenheitInput + "°F => " + celsius + "°C \n"); // result print
+        System.out.println(celsius);
+        return celsius;
     }
 
-    public void distanceConversion(float milesInput){
+    public float distanceConversion(float milesInput){
         // multiplying the distance in miles by 1.609344
         km = (float) (milesInput * 1.609344);
-        System.out.println(milesInput + " miles => " + km + " Km/h \n"); // result print
+        System.out.println(km);
+        return km;
     }
 
-    public void CoinConversion(double coin, float taxInput, String fromCoin, String toCoin ){
-        double converted = coin * taxInput;
-        System.out.println(Math.round(coin*100)/100D + " " + fromCoin + " => " + Math.round(converted*100)/100D + " " + toCoin + "\n"); // result print
+    public float coinConversion(double coin, float taxInput){
+        convertedCoin = (float)coin * taxInput;
+        System.out.println(convertedCoin);
+        return convertedCoin;
     }
 }
